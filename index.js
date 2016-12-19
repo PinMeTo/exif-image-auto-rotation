@@ -19,27 +19,30 @@ function requiresRotating( original, callback ){
 				log(err);
 				return callback(false);
 			}
-
-			var parser = exifParser.create(buffer);
-			var exifResult = parser.parse();
-			if( exifResult.tags ){
-				if( exifResult.tags.Orientation ){
-					switch( exifResult.tags.Orientation	) {
-						case 1: return callback(false); // top-left  - no transform
-						case 2: return callback(true); // top-right - flip horizontal
-						case 3: return callback(true); // bottom-right - rotate 180
-						case 4: return callback(true); // bottom-left - should flip
-						case 5: return callback(true); // left-top - rotate 90 and flip horizontal
-						case 6: return callback(true); // right-top - rotate 90
-						case 7: return callback(true); // right-bottom - rotate 270 and flip horizontal
-						case 8: return callback(true); // left-bottom - rotate 270
-						default: return callback(false); // ... just to be safe
+			try{
+				var parser = exifParser.create(buffer);
+				var exifResult = parser.parse();
+				if( exifResult.tags ){
+					if( exifResult.tags.Orientation ){
+						switch( exifResult.tags.Orientation	) {
+							case 1: return callback(false); // top-left  - no transform
+							case 2: return callback(true); // top-right - flip horizontal
+							case 3: return callback(true); // bottom-right - rotate 180
+							case 4: return callback(true); // bottom-left - should flip
+							case 5: return callback(true); // left-top - rotate 90 and flip horizontal
+							case 6: return callback(true); // right-top - rotate 90
+							case 7: return callback(true); // right-bottom - rotate 270 and flip horizontal
+							case 8: return callback(true); // left-bottom - rotate 270
+							default: return callback(false); // ... just to be safe
+						}
 					}
 				}
-			}
 
-			//default to false
-			return callback(false);
+				//default to false
+				return callback(false);
+			}catch(err){
+				return callback( false );
+			}
 		});
 	});
 }
