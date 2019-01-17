@@ -25,7 +25,7 @@ function requiresRotating(original, callback) {
 				if (exifResult.tags) {
 					if (exifResult.tags.Orientation) {
 						switch (exifResult.tags.Orientation) {
-							case 1: return callback(false); // top-left  - no transform
+							case 1: return callback(false); // top-left - no transform
 							case 2: return callback(true); // top-right - flip horizontal
 							case 3: return callback(true); // bottom-right - rotate 180
 							case 4: return callback(true); // bottom-left - should flip
@@ -89,7 +89,7 @@ module.exports = function(images, callback) {
 		});
 	}, function(err) {
 		if (err) {
-			log('Error with the aync foreach:');
+			log('Error with the async foreach:');
 			log(err);
 		}
 		//last but not least run the callback passed to this module, or just return.
